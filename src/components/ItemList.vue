@@ -25,7 +25,7 @@
 <template>
     <div>ItemList</div>
     <ul>
-        <li v-for="item in items" :key="item.name">
+        <li v-for="item in items" :key="item.name" :class="{over500: item.price >= 500}">
             <div>name: {{ item.name }}</div>
             <div>{{ item.price }} yen</div>
         </li>
@@ -43,4 +43,8 @@
     </div>
 </template>
 
-<style></style>
+<style>
+    .over500 {
+        color: red;
+    }
+</style>

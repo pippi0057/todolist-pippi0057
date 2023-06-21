@@ -1,17 +1,11 @@
 <script setup lang="ts">
-import ClickCounter from './ClickCounter.vue'
-import ItemList from './ItemList.vue'
-
-defineProps<{
-  msg: string
-}>()
+// import ClickCounter from './ClickCounter.vue'
+// import ItemList from './ItemList.vue'
 </script>
 
 <template>
   <div>
-    <h1>{{ msg }}</h1>
-    <ClickCounter />
-    <ItemList />
+    <TaskList />
   </div>
 </template>
 
