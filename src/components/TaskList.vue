@@ -1,31 +1,41 @@
 <script setup lang="ts">
-    import { transferableAbortSignal } from 'util';
-import { ref } from 'vue'
+    import { computed, ref } from 'vue';
+    
+    interface Task {
+        name: string
+        finished: boolean
+    }
 
-    const Task = ref<Task[]>([
-        { name: "hoge", finished: false }
-    ])
+    const Tasks = ref<Task[]>([]);
 
-    const FinisedTasks = ref<Task[]>([])
+    const FinisedTasks = computed(() => Tasks.value.filter((task) => task.finished));
+    const NotFinishedTasks = computed(() => Tasks.value.filter((task) => !task.finished));
 
     const NewTaskName = ref('')
 
     const AddTask = () => {
-        Task.value.push({ name: NewTaskName.value, finished: false })
-        NewTaskName.value = ''
+        Tasks.value.push({ name: NewTaskName.value, finished: false });
+        NewTaskName.value = '';
     }
 
     const ChangeStatus = (FinisedTaskName: string) => {
-        Tasks.value.map = ((task) => {
-            if(task.name === FinisedTaskName) task.finised = true
-        })
+        Tasks.value.map((task) => {
+            if(task.name === FinisedTaskName) task.finished = true;
+        });
     }
 </script>
 
 <template>
-    <div>tasks</div>
+    <h3>tasks</h3>
     <ul>
-        <li v-for="task in Task" :key="task.name">
+        <li v-for="task in NotFinishedTasks" :key="task.name">
+            <div>name: {{ task.name }}</div>
+            <button @click="ChangeStatus(task.name)">complete</button>
+        </li>
+    </ul>
+    <h3>finised tasks</h3>
+    <ul>
+        <li v-for="task in FinisedTasks" :key="task.name">
             <div>name: {{ task.name }}</div>
         </li>
     </ul>
@@ -36,7 +46,6 @@ import { ref } from 'vue'
         </label>
         <button @click="AddTask">add</button>
     </div>
-    <div>finised tasks</div>
 </template>
 
 <style>
